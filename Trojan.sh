@@ -53,7 +53,7 @@ fi
 
 
 #配置密码
-sed -i '8d' config.json
+sed -i '8d' ./config.json
 shuru=$(echo -e "\033[92m配置Trojan密码（默认回车自动随机16位密码）：\033[0m")
 read -p "$shuru" Trojanwd
 if [ ! "$Trojanwd" ]; then
@@ -87,7 +87,7 @@ fi
 zName=$(ls | grep -w trojan-go)
 if [ ! "$zName" ]; then
 	curl -LJo /root/trojan/trojan.zip --create-dirs https://github.com/p4gefau1t/trojan-go/releases/download/"$versionTag"/trojan-go-linux-amd64.zip
-	unzip trojan.zip
+	unzip ./trojan.zip
 	echo -e "\033[102;91mTrojan-go装载完成\033[0m"
 else
 	echo -e "\033[102;91m已安装Trojan-go\033[0m"
