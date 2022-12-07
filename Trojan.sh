@@ -100,11 +100,11 @@ echo -e "\033[93m\n选择有无域名（无域名会用自签ip）:\n  1.有域�
 shuru=$(echo -e "\033[92m请选择:\033[0m")
 read -p "$shuru" Domain
 case "$Domain" in
-	1 ) sslacme()
+	1 ) sslacme
 	;;
-	2 ) sslDomain()
+	2 ) sslDomain
 	;;
-	"" ) sslacme()
+	"" ) sslacme
 esac
 
 #acme签名函数
