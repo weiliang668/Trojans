@@ -94,17 +94,6 @@ else
 	echo -e "\033[102;91m已安装Trojan-go\033[0m"
 fi
 
-
-#选择无域名（自签证书）还是有域名（acme证书）
-echo -e "\033[93m\n选择有无域名（无域名会用自签ip）:\n  1.有域名(默认) \n  2.无域名\n\033[0m"
-shuru=$(echo -e "\033[92m请选择:\033[0m")
-read -p "$shuru" Domain
-case "$Domain" in
-	1 ) sslacme;;
-	2 ) sslDomain;;
-	"" ) sslacme;;
-esac
-
 #acme签名函数
 sslacme(){
 	#输入域名
@@ -183,6 +172,15 @@ sslDomain(){
 	echo -e "\033[42;91mTrojan密码：$Trojanwds\033[0m"
 	echo -e "\033[42;91mTrojan版本号：$versionTag\033[0m"
 	echo -e "\033[42;91m安装完成！\033[0m"
-	exit
-	
 }
+
+#选择无域名（自签证书）还是有域名（acme证书）
+echo -e "\033[93m\n选择有无域名（无域名会用自签ip）:\n  1.有域名(默认) \n  2.无域名\n\033[0m"
+shuru=$(echo -e "\033[92m请选择:\033[0m")
+read -p "$shuru" Domain
+case "$Domain" in
+	1 ) sslacme; exit 0;;
+	2 ) sslDomain; exit 0;;
+	"" ) sslacme; exit 0;;
+esac
+
