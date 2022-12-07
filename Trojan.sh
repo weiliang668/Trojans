@@ -66,10 +66,10 @@ if [ ! "$Trojanwd" ]; then
 		index=$[RANDOM%num]
 		pass=$pass${key:$index:1}
 	done
-	eval sed -i '8i \        \"$pass\"' config.json
+	sed -i "8i \        \"$pass\"" config.json
 	Trojanwds=$pass
 else
-	eval sed -i '8i \        \"$Trojanwd\"' config.json
+	sed -i "8i \        \"$Trojanwd\"" config.json
 	Trojanwds=$Trojanwd
 fi
 
