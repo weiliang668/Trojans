@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+cd 'dirname $0'; pwd
 #更新组件
 apt-get update -y
 
