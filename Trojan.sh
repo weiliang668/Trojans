@@ -49,6 +49,7 @@ if [ "$cName" ]; then
 else
 	curl -LJo /root/trojan/config.json --create-dirs https://raw.githubusercontent.com/weiliang668/Trojans/main/config.json
 	echo -e "\033[102;91m默认配置下载完成\033[0m"
+	pwd
 fi
 
 
