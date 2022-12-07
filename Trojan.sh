@@ -122,7 +122,7 @@ sslacme(){
 	alias acme.sh=~/.acme.sh/acme.sh
 	
 	#使alias立即生效
-	source ~/.bashrc
+	source ~/.bash_aliases
 	
 	#申请证书
 	acme.sh  --issue -d $sslName  --standalone -k ec-256
@@ -131,7 +131,7 @@ sslacme(){
 	acme.sh --installcert -d $sslName --ecc  --key-file   server.key   --fullchain-file server.crt
 	
 	#卸载socat
-	if [ ! "$sName" ]; then
+	if [ "$sName" ]; then
 		apt-get purge -y socat
 	fi
 
@@ -159,7 +159,7 @@ sslDomain(){
 	nohup ./trojan-go > trojan.log 2>&1 &
 	
 	#卸载socat
-	if [ ! "$sName" ]; then
+	if [ "$sName" ]; then
 		apt-get purge -y socat
 	fi
 	
@@ -183,4 +183,3 @@ case "$Domain" in
 	2 ) sslDomain; exit 0;;
 	"" ) sslacme; exit 0;;
 esac
-
