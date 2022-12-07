@@ -66,10 +66,10 @@ if [ ! "$Trojanwd" ]; then
 		index=$[RANDOM%num]
 		pass=$pass${key:$index:1}
 	done
-	sed -i "8i \        \"$pass\"" config.json
+	sed -i "8i \        \"${pass}\"" config.json
 	Trojanwds=$pass
 else
-	sed -i "8i \        \"$Trojanwd\"" config.json
+	sed -i "8i \        \"${Trojanwd}\"" config.json
 	Trojanwds=$Trojanwd
 fi
 
@@ -92,7 +92,6 @@ if [ ! "$zName" ]; then
 	echo -e "\033[102;91mTrojan-go装载完成\033[0m"
 else
 	echo -e "\033[102;91m已安装Trojan-go\033[0m"
-	exit
 fi
 
 
@@ -101,9 +100,9 @@ echo -e "\033[93m\n选择有无域名（无域名会用自签ip）:\n  1.有域�
 shuru=$(echo -e "\033[92m请选择:\033[0m")
 read -p "$shuru" Domain
 case "$Domain" in
-	1 ) sslacme(); exit 0;;
-	2 ) sslDomain(); exit 0;;
-	"" ) sslacme(); exit 0;;
+	1 ) sslacme();;
+	2 ) sslDomain();;
+	"" ) sslacme();;
 esac
 
 #acme签名函数
@@ -156,6 +155,7 @@ sslacme(){
 	echo -e "\033[42;91mTrojan密码：$Trojanwds\033[0m"
 	echo -e "\033[42;91mTrojan版本号：$versionTag\033[0m"
 	echo -e "\033[42;91m安装完成！\033[0m"
+	exit
 }
 
 #自签名函数
@@ -183,5 +183,6 @@ sslDomain(){
 	echo -e "\033[42;91mTrojan密码：$Trojanwds\033[0m"
 	echo -e "\033[42;91mTrojan版本号：$versionTag\033[0m"
 	echo -e "\033[42;91m安装完成！\033[0m"
+	exit
 	
 }
