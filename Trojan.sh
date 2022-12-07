@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 cd /root/trojan
 #更新组件
 apt-get update -y
@@ -49,7 +50,6 @@ if [ "$cName" ]; then
 else
 	curl -LJo /root/trojan/config.json --create-dirs https://raw.githubusercontent.com/weiliang668/Trojans/main/config.json
 	echo -e "\033[102;91m默认配置下载完成\033[0m"
-	pwd
 fi
 
 
@@ -66,10 +66,10 @@ if [ ! "$Trojanwd" ]; then
 		index=$[RANDOM%num]
 		pass=$pass${key:$index:1}
 	done
-	sed -i '8i \        \"$pass\"' config.json
+	eval sed -i '8i \        \"$pass\"' config.json
 	Trojanwds=$pass
 else
-	sed -i '8i \        \"$Trojanwd\"' config.json
+	eval sed -i '8i \        \"$Trojanwd\"' config.json
 	Trojanwds=$Trojanwd
 fi
 
@@ -101,9 +101,9 @@ echo -e "\033[93m\n选择有无域名（无域名会用自签ip）:\n  1.有域�
 shuru=$(echo -e "\033[92m请选择:\033[0m")
 read -p "$shuru" Domain
 case "$Domain" in
-	1 ) sslacme; exit 0;;
-	2 ) sslDomain; exit 0;;
-	"" ) sslacme; exit 0;;
+	1 ) sslacme(); exit 0;;
+	2 ) sslDomain(); exit 0;;
+	"" ) sslacme(); exit 0;;
 esac
 
 #acme签名函数
