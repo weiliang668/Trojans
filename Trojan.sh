@@ -73,8 +73,33 @@ else
 	Trojanwds=$Trojanwd
 fi
 
+#配置端口
+shuru=$(echo -e "\033[92m配置Trojan端口（默认回车6666端口）：\033[0m")
+read -p "$shuru" Trojanpr
+while [[ ! "$Trojanpr" =~ ^[1-9]+$ ]]
+do
+	echo -e "\033[91m端口必须大于等于443，小于65536，并且必须是数字！\033[0m"
+	read -p "$shuru" Trojanpr
+done
+
+while [ "$Trojanpr" -lt 443 ]
+do
+	echo -e "\033[91m端口必须大于等于443，小于65536，并且必须是数字！\033[0m"
+	read -p "$shuru" Trojanpr
+done
+
+while [ "$Trojanpr" -gt 65536 ]
+do
+	echo -e "\033[91m端口必须大于等于443，小于65536，并且必须是数字！\033[0m"
+	read -p "$shuru" Trojanpr
+done
+
+if [ "$Trojanpr" ]; then
+	sed -i 's/6666/${Trojanpr}/g' config.json
+fi
 
 
+ 
 #获取最新版本号
 versionTag=$(curl -s https://api.github.com/repos/p4gefau1t/trojan-go/releases/latest | grep tag_name | cut -f4 -d "\"")
 if [ ! "$versionTag" ]; then
@@ -139,9 +164,11 @@ sslacme(){
 	nohup ./trojan-go > trojan.log 2>&1 &
 
 	#生成客户端二维码和链接
-	qrencode -o - -t UTF8 -l Q 'trojan://$Trojanwds@$sslName:443?security=tls&type=tcp&headerType=none#Trojans'
+	qrencode -t UTF8 -s 1 -m 2 'trojan://$Trojanwds@$sslName:443?security=tls&type=tcp&headerType=none#Trojans'
 	echo -e "\033[42;91m快速链接：trojan://$Trojanwds@$sslName:443?security=tls&type=tcp&headerType=none#Trojans\033[0m"
 	echo -e "\033[42;91mTrojan密码：$Trojanwds\033[0m"
+	echo -e "\033[42;91mTrojan端口：$Trojanpr\033[0m"
+	echo -e "\033[42;91mTrojan域名：$sslName\033[0m"
 	echo -e "\033[42;91mTrojan版本号：$versionTag\033[0m"
 	echo -e "\033[42;91m安装完成！\033[0m"
 	exit
@@ -166,10 +193,12 @@ sslDomain(){
 	#查询公网IP
 	IpDomain=$(curl http://ifconfig.io)
 	#生成客户端二维码和链接
-	qrencode -o - -t UTF8 -l Q 'trojan://$Trojanwds@$IpDomain:443?security=tls&sni=bing.com&type=tcp&headerType=none#Trojans'
+	qrencode -t UTF8 -s 1 -m 2 'trojan://$Trojanwds@$IpDomain:443?security=tls&sni=bing.com&type=tcp&headerType=none#Trojans'
 	echo -e "\033[42;91m快速链接：trojan://$Trojanwds@$IpDomain:443?security=tls&sni=bing.com&type=tcp&headerType=none#Trojans\033[0m"
 	echo -e "\033[42;95m无域名Trojan节点链接必须在客户端手动把-跳过证书验证（allowInsecure）设置成：true\033[0m"
 	echo -e "\033[42;91mTrojan密码：$Trojanwds\033[0m"
+	echo -e "\033[42;91mTrojan端口：$Trojanpr\033[0m"
+	echo -e "\033[42;91mTrojan域名：$IpDomain\033[0m"
 	echo -e "\033[42;91mTrojan版本号：$versionTag\033[0m"
 	echo -e "\033[42;91m安装完成！\033[0m"
 }
@@ -178,8 +207,16 @@ sslDomain(){
 echo -e "\033[93m\n选择有无域名（无域名会用自签ip）:\n  1.有域名(默认) \n  2.无域名\n\033[0m"
 shuru=$(echo -e "\033[92m请选择:\033[0m")
 read -p "$shuru" Domain
-case "$Domain" in
+while [ "$Domain" ]
+do
+	case "$Domain" in
 	1 ) sslacme; exit 0;;
 	2 ) sslDomain; exit 0;;
-	"" ) sslacme; exit 0;;
-esac
+	esac
+	echo -e "\033[91m\n输入错误，重新输入！\n\033[0m"
+	read -p "$shuru" Domain
+done
+if [ ! "$Domain" ]; then
+	sslacme
+	exit 0
+fi
