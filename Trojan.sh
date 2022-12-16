@@ -6,8 +6,8 @@ cd /root/trojan
 apt-get update -y
 
 #安装wget
-wName=$(dpkg -l | grep -w wget)
-if [ "$wName" ]; then
+wName=$(dpkg -l | grep -w wget | awk '{print $1}')
+if [ "$wName" = "ii" ]; then
 	echo -e "\033[102;91mwget已安装，跳过\033[0m"
 else
 	apt-get install -y wget
@@ -16,8 +16,8 @@ fi
 
 
 #安装unzip
-zName=$(dpkg -l | grep -w zip)
-if [ "$zName" ]; then
+zName=$(dpkg -l | grep -w zip | awk '{print $1}')
+if [ "$zName" = "ii" ]; then
 	echo -e "\033[102;91mzip已安装，跳过\033[0m"
 else
 	apt-get install -y zip
@@ -25,8 +25,8 @@ else
 fi
 
 #安装qrencode二维码工具
-qName=$(dpkg -l | grep -w qrencode)
-if [ "$qName" ]; then
+qName=$(dpkg -l | grep -w qrencode | awk '{print $1}')
+if [ "$qName" = "ii" ]; then
 	echo -e "\033[102;91mqrencode已安装，跳过\033[0m"
 else
 	apt-get install -y qrencode
@@ -34,8 +34,8 @@ else
 fi
 
 #安装socat
-sName=$(dpkg -l | grep -w socat)
-if [ "$sName" ]; then
+sName=$(dpkg -l | grep -w socat | awk '{print $1}')
+if [ "$sName" = "ii" ]; then
 	echo -e "\033[102;91msocat已安装，跳过\033[0m"
 else
 	apt-get install -y socat
@@ -156,7 +156,7 @@ sslacme(){
 	acme.sh --installcert -d $sslName --ecc  --key-file   server.key   --fullchain-file server.crt
 	
 	#卸载socat
-	if [ "$sName" ]; then
+	if [ "$sName" = "ii" ]; then
 		apt-get purge -y socat
 	fi
 
@@ -186,7 +186,7 @@ sslDomain(){
 	nohup ./trojan-go > trojan.log 2>&1 &
 	
 	#卸载socat
-	if [ "$sName" ]; then
+	if [ "$sName" = "ii" ]; then
 		apt-get purge -y socat
 	fi
 	
