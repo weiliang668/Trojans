@@ -1,13 +1,8 @@
 #!/bin/bash
 
-
-cd /root/trojan
 #更新组件
 apt-get update -y
-pwd
-pwd
-pwd
-pwd
+
 #安装wget
 wName=$(dpkg -l | grep -w wget | awk '{print $1}')
 if [ "$wName" = "ii" ]; then
@@ -54,7 +49,11 @@ else
 	curl -LJo /root/trojan/config.json --create-dirs https://raw.githubusercontent.com/weiliang668/Trojans/main/config.json
 	echo -e "\033[102;91m默认配置下载完成\033[0m"
 fi
-
+cd /root/trojan
+pwd
+pwd
+pwd
+pwd
 
 #配置密码
 sed -i '8d' ./config.json
