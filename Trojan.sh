@@ -184,7 +184,6 @@ pwd
 	echo -e "\033[42;91mTrojan域名：$sslName\033[0m"
 	echo -e "\033[42;91mTrojan版本号：$versionTag\033[0m"
 	echo -e "\033[42;91m安装完成！\033[0m"
-	exit
 }
 
 #自签名函数
