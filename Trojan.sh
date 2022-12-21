@@ -95,7 +95,7 @@ do
 done
 
 if [ "$Trojanpr" ]; then
-	sed -i 's/6666/${Trojanpr}/g' config.json
+	sed -i 's/6666/$Trojanpr/g' config.json
 fi
 
 
@@ -141,26 +141,33 @@ sslacme(){
 	
 	
 	#开启alias
+	echo -e "\033[91m\n开启alias\n\033[0m"
 	shopt -s expand_aliases
 	
 	#创建别名
+	echo -e "\033[91m\n创建别名\n\033[0m"
 	alias acme.sh=~/.acme.sh/acme.sh
 	
 	#使alias立即生效
+	echo -e "\033[91m\nalias立即生效\n\033[0m"
 	source ~/.bash_aliases
 	
 	#申请证书
+	echo -e "\033[91m\n申请证书\n\033[0m"
 	acme.sh  --issue -d $sslName  --standalone -k ec-256
 
 	#安装证书：
+	echo -e "\033[91m\n安装证书\n\033[0m"
 	acme.sh --installcert -d $sslName --ecc  --key-file   server.key   --fullchain-file server.crt
 	
 	#卸载socat
+	echo -e "\033[91m\n开始卸载socat\n\033[0m"
 	if [ "$sName" = "ii" ]; then
 		apt-get purge -y socat
 	fi
 
 	#后台启动trojan-go
+	echo -e "\033[91m\n开启后台trojan\n\033[0m"
 	nohup ./trojan-go > trojan.log 2>&1 &
 
 	#生成客户端二维码和链接
@@ -210,13 +217,14 @@ read -p "$shuru" Domain
 while [ "$Domain" ]
 do
 	case "$Domain" in
-	1 ) sslacme; exit 0;;
-	2 ) sslDomain; exit 0;;
+	1 ) sslacme;
+	;;
+	2 ) sslDomain;
+	;;
 	esac
 	echo -e "\033[91m\n输入错误，重新输入！\n\033[0m"
 	read -p "$shuru" Domain
 done
 if [ ! "$Domain" ]; then
 	sslacme
-	exit 0
 fi
