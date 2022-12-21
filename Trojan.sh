@@ -138,17 +138,15 @@ sslacme(){
 	fi
 	
 	
-	#开启alias
-	echo -e "\033[91m\n开启alias\n\033[0m"
-	shopt -s expand_aliases
+	
 	
 	#创建别名
 	echo -e "\033[91m\n创建别名\n\033[0m"
 	alias acme.sh=~/.acme.sh/acme.sh
 	
-	#使alias立即生效
-	echo -e "\033[91m\nalias立即生效\n\033[0m"
-	source ~/.bashrc
+	#开启alias
+	echo -e "\033[91m\n开启alias\n\033[0m"
+	shopt -s expand_aliases
 	
 	#申请证书
 	echo -e "\033[91m\n申请证书\n\033[0m"
