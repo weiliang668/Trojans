@@ -50,10 +50,6 @@ else
 	echo -e "\033[102;91m默认配置下载完成\033[0m"
 fi
 cd /root/trojan
-pwd
-pwd
-pwd
-pwd
 
 #配置密码
 sed -i '8d' ./config.json
@@ -167,10 +163,7 @@ sslacme(){
 	if [ "$sName" = "ii" ]; then
 		apt-get purge -y socat
 	fi
-pwd
-pwd
-pwd
-pwd
+
 	#后台启动trojan-go
 	echo -e "\033[91m\n开启后台trojan\n\033[0m"
 	nohup ./trojan-go > trojan.log 2>&1 &
