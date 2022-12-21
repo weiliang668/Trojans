@@ -4,7 +4,10 @@
 cd /root/trojan
 #更新组件
 apt-get update -y
-
+pwd
+pwd
+pwd
+pwd
 #安装wget
 wName=$(dpkg -l | grep -w wget | awk '{print $1}')
 if [ "$wName" = "ii" ]; then
@@ -95,7 +98,7 @@ do
 done
 
 if [ "$Trojanpr" ]; then
-	sed -i 's/6666/$Trojanpr/g' config.json
+	sed -i "s/6666/${Trojanpr}/g" config.json
 fi
 
 
@@ -150,7 +153,7 @@ sslacme(){
 	
 	#使alias立即生效
 	echo -e "\033[91m\nalias立即生效\n\033[0m"
-	source ~/.bash_aliases
+	source ~/.bashrc
 	
 	#申请证书
 	echo -e "\033[91m\n申请证书\n\033[0m"
@@ -165,7 +168,10 @@ sslacme(){
 	if [ "$sName" = "ii" ]; then
 		apt-get purge -y socat
 	fi
-
+pwd
+pwd
+pwd
+pwd
 	#后台启动trojan-go
 	echo -e "\033[91m\n开启后台trojan\n\033[0m"
 	nohup ./trojan-go > trojan.log 2>&1 &
